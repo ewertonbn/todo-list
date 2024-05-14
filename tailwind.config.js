@@ -5,6 +5,7 @@ const defaultTheme = require('tailwindcss/defaultTheme')
 
 export default {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
+  darkMode: 'class',
   theme: {
     extend: {
       fontFamily: {
@@ -22,6 +23,7 @@ export default {
       'gray-400': '#333333',
       'gray-300': '#808080',
       'gray-200': '#D9D9D9',
+      'gray-150': '#eaeaea',
       'gray-100': '#F2F2F2',
       danger: '#E25858',
       transparent: 'transparent',

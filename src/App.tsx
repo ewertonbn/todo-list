@@ -16,6 +16,16 @@ interface TasksProps {
 }
 
 export function App() {
+  const [darkMode, setDarkMode] = useState(() => {
+    const storedTheme = localStorage.getItem('todolist:theme')
+
+    if (storedTheme) {
+      return JSON.parse(storedTheme)
+    } else {
+      return false
+    }
+  })
+
   const [tasks, setTasks] = useState<TasksProps[]>(() => {
     const storedTasks = localStorage.getItem('todolist:tasks')
 
@@ -71,13 +81,27 @@ export function App() {
     setTasks(updatedTasks)
   }
 
+  function toggleDarkMode() {
+    setDarkMode((state: boolean) => !state)
+  }
+
   useEffect(() => {
     localStorage.setItem('todolist:tasks', JSON.stringify(tasks))
   }, [tasks])
 
+  useEffect(() => {
+    const isDarkMode = localStorage.getItem('todolist:theme') === 'true'
+    setDarkMode(isDarkMode)
+  }, [])
+
+  useEffect(() => {
+    document.documentElement.classList.toggle('dark', darkMode)
+    localStorage.setItem('todolist:theme', darkMode)
+  }, [darkMode])
+
   return (
     <>
-      <Header />
+      <Header darkMode={darkMode} onToggleDarkMode={toggleDarkMode} />
       <main className="mx-auto mt-[calc(0px_-_1.5rem_-_6px)] max-w-[736px]">
         <AddNewTask onCreateNewTask={crateNewTask} />
         <CounterStatusTask

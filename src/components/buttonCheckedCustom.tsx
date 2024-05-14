@@ -20,7 +20,7 @@ export function ButtonCheckedCustom({
         'relative h-5 w-5 rounded-full border-2 transition-colors',
         isChecked
           ? 'border-purple-dark bg-purple-dark before:absolute before:inset-0 before:m-auto before:w-3 before:bg-[url("../icon-checked.svg")] before:bg-contain before:bg-center before:bg-no-repeat before:content-[""] hover:border-purple hover:bg-purple'
-          : 'border-blue bg-gray-500 hover:border-blue-dark hover:bg-blue-dark/20',
+          : 'border-blue hover:border-blue-dark hover:bg-blue-dark/20 dark:bg-gray-500',
       )}
     />
   )
