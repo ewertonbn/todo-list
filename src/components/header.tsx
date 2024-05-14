@@ -15,7 +15,7 @@ export function Header({ darkMode, onToggleDarkMode }: HeaderProps) {
   }
 
   return (
-    <header className="bg-blue pb-20 pt-[4.5rem] dark:bg-gray-700">
+    <header className="bg-blue px-5 pb-20 pt-[4.5rem] md:px-0 dark:bg-gray-700">
       <div className="relative mx-auto flex max-w-[736px] items-center justify-center">
         {darkMode ? (
           <img

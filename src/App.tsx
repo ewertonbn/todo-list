@@ -102,7 +102,7 @@ export function App() {
   return (
     <>
       <Header darkMode={darkMode} onToggleDarkMode={toggleDarkMode} />
-      <main className="mx-auto mt-[calc(0px_-_1.5rem_-_6px)] max-w-[736px]">
+      <main className="mx-auto mt-[calc(0px_-_1.5rem_-_6px)] max-w-[736px] px-5 md:px-0">
         <AddNewTask onCreateNewTask={crateNewTask} />
         <CounterStatusTask
           totalTasksCreated={tasks.length}
