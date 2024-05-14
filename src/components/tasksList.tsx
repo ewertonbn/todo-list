@@ -1,4 +1,6 @@
 import { FormEvent } from 'react'
+import { formatDistanceToNow } from 'date-fns'
+import { ptBR } from 'date-fns/locale'
 import { Trash } from 'phosphor-react'
 import { twMerge } from 'tailwind-merge'
 
@@ -22,6 +24,11 @@ export function TasksList({
   onDeleteTask,
   onToggleTask,
 }: TasksListProps) {
+  const publishedDateRelativeToNow = formatDistanceToNow(data.createdAt, {
+    locale: ptBR,
+    addSuffix: true,
+  })
+
   function handleDeleteTask(event: FormEvent) {
     onDeleteTask(event.currentTarget.id)
   }
@@ -34,7 +41,7 @@ export function TasksList({
     <div className="mt-6">
       <div
         className={twMerge(
-          'mt-3 flex items-start justify-between gap-3 rounded-lg border border-gray-400 bg-gray-500 p-4 first:mt-0',
+          'mt-3 flex items-center justify-between gap-3 rounded-lg border border-gray-400 bg-gray-500 p-4 first:mt-0',
           data.isChecked ? 'border-gray-500' : 'border-gray-400',
         )}
       >
@@ -50,6 +57,7 @@ export function TasksList({
         ) : (
           <p className="flex-1 text-sm">{data.content}</p>
         )}
+        <p className="text-xs text-gray-200">{publishedDateRelativeToNow}</p>
         <button
           type="button"
           className="flex h-6 w-6 items-center justify-center rounded-[4px] text-gray-300 transition-colors hover:bg-gray-400 hover:text-danger"
