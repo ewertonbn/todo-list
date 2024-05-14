@@ -11,12 +11,6 @@
 
 <br>
 
-<h2 align="center">
-  Application developed on Rocketseat's React for web trail
-</h2>
-
-<br>
-
 <h1 align="left"> 
   ToDo List application
 </h1>
