@@ -22,7 +22,7 @@ export function App() {
     if (storedTheme) {
       return JSON.parse(storedTheme)
     } else {
-      return false
+      return true
     }
   })
 
