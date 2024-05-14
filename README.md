@@ -36,7 +36,7 @@
   ToDo List is an application that aims to help users organize their daily to-do list, with functionality to create new tasks, remove them and mark them as complete, as well as counters for easy viewing.
 </p>
 
-Application link: <a href="https://todo-list-application.vercel.app/" target="_blank">https://todo-list-application.vercel.app/</a>
+Application link: [https://todo-list-application-beta.vercel.app/](https://todo-list-application-beta.vercel.app/)
 
 <p align="center">
   <img src="./public/screenshots/capa.png" />
