@@ -1,17 +1,16 @@
 import { ChangeEvent, FormEvent, useState } from 'react'
 import { PlusCircle } from 'phosphor-react'
 
-interface AddNewTaskProps {
-  onCreateNewTask: (content: string) => void
-}
+import { useTasks } from '../hooks/useTasks'
 
-export function AddNewTask({ onCreateNewTask }: AddNewTaskProps) {
+export function AddNewTask() {
   const [newTask, setNewTask] = useState('')
+  const { createNewTask } = useTasks()
 
   function handleAddNewTask(event: FormEvent) {
     event.preventDefault()
 
-    onCreateNewTask(newTask)
+    createNewTask(newTask)
     setNewTask('')
   }
 
@@ -31,7 +30,7 @@ export function AddNewTask({ onCreateNewTask }: AddNewTaskProps) {
         placeholder="Adicione uma nova tarefa"
         value={newTask}
         onChange={handleNewTaskChange}
-        className="bg-gray-150 flex-1 rounded-lg border border-gray-700 p-4 transition-colors placeholder:text-gray-600 focus:border-transparent dark:bg-gray-500 dark:placeholder:text-gray-300"
+        className="flex-1 rounded-lg border border-gray-700 bg-gray-150 p-4 transition-colors placeholder:text-gray-600 focus:border-transparent dark:bg-gray-500 dark:placeholder:text-gray-300"
       />
       <button
         type="submit"

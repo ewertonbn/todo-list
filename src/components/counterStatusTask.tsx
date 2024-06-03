@@ -1,12 +1,10 @@
-interface CounterStatusTaskProps {
-  totalTasksCreated: number
-  totalTasksCompleted: number
-}
+import { useTasks } from '../hooks/useTasks'
 
-export function CounterStatusTask({
-  totalTasksCreated,
-  totalTasksCompleted,
-}: CounterStatusTaskProps) {
+export function CounterStatusTask() {
+  const { tasks, checkedTasksCounter } = useTasks()
+
+  const totalTasksCreated = tasks.length
+
   return (
     <div className="mt-16 flex items-center justify-between">
       <div className="flex items-center gap-2">
@@ -22,7 +20,7 @@ export function CounterStatusTask({
           Conluídas
         </p>
         <span className="rounded-full bg-gray-200 px-2 py-[2px] text-xs font-bold leading-[100%] text-gray-600 dark:bg-gray-400 dark:text-gray-200">
-          {totalTasksCompleted} de {totalTasksCreated}
+          {checkedTasksCounter} de {totalTasksCreated}
         </span>
       </div>
     </div>
