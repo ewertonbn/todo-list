@@ -3,20 +3,20 @@ import {
   ReactNode,
   useContext,
   useEffect,
-  useState,
+  useReducer,
 } from 'react'
 import toast from 'react-hot-toast'
 import { v4 as uuidv4 } from 'uuid'
 
-interface Tasks {
-  id: string
-  content: string
-  isChecked: boolean
-  createdAt: Date
-}
+import {
+  addNewTaskAction,
+  deleteTaskAction,
+  toggleTaskAsFinishedAction,
+} from '../reducers/tasks/actions'
+import { Task, tasksReducer } from '../reducers/tasks/reducer'
 
 interface TasksContextType {
-  tasks: Tasks[]
+  tasks: Task[]
   checkedTasksCounter: number
   createNewTask: (content: string) => void
   deleteTask: (id: string) => void
@@ -30,15 +30,23 @@ interface TasksContextProviderProps {
 export const TasksContext = createContext({} as TasksContextType)
 
 export function TasksContextProvider({ children }: TasksContextProviderProps) {
-  const [tasks, setTasks] = useState<Tasks[]>(() => {
-    const storedTasks = localStorage.getItem('@todolist:tasks-1.0.0')
+  const [tasksState, dispatch] = useReducer(
+    tasksReducer,
+    {
+      tasks: [],
+    },
+    (initialState) => {
+      const storedStateAsJSON = localStorage.getItem('@todolist:tasks-1.0.0')
 
-    if (storedTasks) {
-      return JSON.parse(storedTasks)
-    } else {
-      return []
-    }
-  })
+      if (storedStateAsJSON) {
+        return JSON.parse(storedStateAsJSON)
+      }
+
+      return initialState
+    },
+  )
+
+  const { tasks } = tasksState
 
   const checkedTasksCounter = tasks.reduce((acc, task) => {
     if (task.isChecked) {
@@ -56,38 +64,28 @@ export function TasksContextProvider({ children }: TasksContextProviderProps) {
       createdAt: new Date(),
     }
 
-    setTasks((state) => [...state, newTask])
+    dispatch(addNewTaskAction(newTask))
     toast.success('Tarefa adicionada!')
   }
 
   function deleteTask(id: string) {
-    const newListTasks = tasks.filter((task) => {
-      return task.id !== id
-    })
-
     if (!confirm('Deseja mesmo apagar essa tarefa?')) {
       return
     }
 
-    setTasks(newListTasks)
-    toast.error('Tarefa removida!')
+    dispatch(deleteTaskAction(id))
+    toast.success('Tarefa removida!')
   }
 
   function toggleTask({ id, value }: { id: string; value: boolean }) {
-    const updatedTasks = tasks.map((task) => {
-      if (task.id === id) {
-        return { ...task, isChecked: value }
-      }
-
-      return { ...task }
-    })
-
-    setTasks(updatedTasks)
+    dispatch(toggleTaskAsFinishedAction(id, value))
   }
 
   useEffect(() => {
-    localStorage.setItem('@todolist:tasks-1.0.0', JSON.stringify(tasks))
-  }, [tasks])
+    const stateJSON = JSON.stringify(tasksState)
+
+    localStorage.setItem('@todolist:tasks-1.0.0', stateJSON)
+  }, [tasksState])
 
   return (
     <TasksContext.Provider
